@@ -5,12 +5,8 @@ import com.sparta.jpacrud.dto.TodoResponseDto;
 import com.sparta.jpacrud.entity.Todo;
 import com.sparta.jpacrud.repository.TodoRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 
 @Service
@@ -18,9 +14,11 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final EntityManager em;
 
-    public TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository , EntityManager em) {
         this.todoRepository = todoRepository;
+        this.em = em;
 
     }
 
@@ -36,9 +34,12 @@ public class TodoService {
 
     @Transactional
     public TodoResponseDto updateTodo(Long id, TodoRequestDto requestDto) {
-        Todo todo = todoRepository.findById(id).get();
+        Todo todo = findTodo(id);
+        todo.update(requestDto);
 
-        return new TodoResponseDto(todo.update(requestDto));
+        //바로 반영시켜 클라이언트 반환시 실시간표시
+        em.flush();
+        return new TodoResponseDto(findTodo(id));
     }
 
 
@@ -55,5 +56,10 @@ public class TodoService {
             return "일정이 삭제되었습니다.";
         }
         else return "존재하지 않는 일정입니다.";
+    }
+
+    private Todo findTodo(Long id) {
+        return todoRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 일정입니다."));
     }
 }

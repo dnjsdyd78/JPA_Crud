@@ -1,6 +1,7 @@
 package com.sparta.jpacrud.entity;
 
 import com.sparta.jpacrud.dto.TodoRequestDto;
+import com.sparta.jpacrud.dto.TodoResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Table(name = "todo")
 @NoArgsConstructor
 
-public class Todo{
+public class Todo extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,11 +30,9 @@ public class Todo{
         this.username = requestDto.getUserName();
     }
 
-    public Todo update(TodoRequestDto requestDto) {
+    public Todo update(TodoRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.username = requestDto.getUserName();
-
         return this;
     }
 }
