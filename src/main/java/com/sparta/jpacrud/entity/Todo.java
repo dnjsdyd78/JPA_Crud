@@ -1,21 +1,27 @@
 package com.sparta.jpacrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.jpacrud.dto.TodoRequestDto;
-import com.sparta.jpacrud.dto.TodoResponseDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "todo")
 @NoArgsConstructor
+@AllArgsConstructor
 
 public class Todo extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "todo_id")
     private Long id;
     @Column(name = "title")
     private String title;
@@ -23,6 +29,11 @@ public class Todo extends Timestamped{
     private String contents;
     @Column(name = "username")
     private String username;
+
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Comment> comments = new ArrayList<>();
+
 
     public Todo(TodoRequestDto requestDto) {
         this.title = requestDto.getTitle();
@@ -34,5 +45,10 @@ public class Todo extends Timestamped{
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         return this;
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+        comment.setTodo(this);
     }
 }

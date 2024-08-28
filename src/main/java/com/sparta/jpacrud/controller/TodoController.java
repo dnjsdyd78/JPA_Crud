@@ -3,7 +3,6 @@ package com.sparta.jpacrud.controller;
 
 import com.sparta.jpacrud.dto.TodoRequestDto;
 import com.sparta.jpacrud.dto.TodoResponseDto;
-import com.sparta.jpacrud.entity.Todo;
 import com.sparta.jpacrud.service.TodoService;
 import org.springframework.web.bind.annotation.*;
 

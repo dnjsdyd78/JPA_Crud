@@ -58,7 +58,7 @@ public class TodoService {
         else return "존재하지 않는 일정입니다.";
     }
 
-    private Todo findTodo(Long id) {
+    public Todo findTodo(Long id) {
         return todoRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("존재하지 않는 일정입니다."));
     }

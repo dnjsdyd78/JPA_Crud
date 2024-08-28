@@ -14,11 +14,13 @@ public class TodoResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+
     public TodoResponseDto(Todo todo) {
         this.title = todo.getTitle();
         this.contents = todo.getContents();
         this.userName = todo.getUsername();
         this.createdAt = todo.getCreateAt();
         this.updatedAt = todo.getUpdateAt();
+
     }
 }
