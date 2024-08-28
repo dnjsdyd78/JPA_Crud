@@ -10,4 +10,6 @@ public class CommentResponseDto {
         this.author = comment.getAuthor();
         this.contents = comment.getMessage();
     }
+
+
 }

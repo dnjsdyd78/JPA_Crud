@@ -6,7 +6,6 @@ import com.sparta.jpacrud.entity.Todo;
 import com.sparta.jpacrud.repository.TodoRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -32,14 +31,12 @@ public class TodoService {
         return todoResponseDto;
     }
 
-    @Transactional
+
     public TodoResponseDto updateTodo(Long id, TodoRequestDto requestDto) {
         Todo todo = findTodo(id);
         todo.update(requestDto);
-
-        //바로 반영시켜 클라이언트 반환시 실시간표시
-        em.flush();
-        return new TodoResponseDto(findTodo(id));
+        todoRepository.save(todo);
+        return new TodoResponseDto(todo);
     }
 
 

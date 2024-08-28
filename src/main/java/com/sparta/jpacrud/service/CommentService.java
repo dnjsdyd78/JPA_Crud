@@ -34,7 +34,6 @@ public class CommentService {
         return todo;
     }
 
-    @Transactional
     public List<Comment> getComments(String name) {
 
         List<Comment> comments = commentRepository.findByAuthor(name).orElseThrow(
@@ -42,5 +41,27 @@ public class CommentService {
         );
         return comments;
 
+    }
+
+    public List<Comment> getAllComments(){
+        return commentRepository.findAll();
+    }
+
+    @Transactional
+    public Comment updateComment(Long id, CommentRequestDto requestDto) {
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
+        comment.update(requestDto);
+
+        return commentRepository.save(comment);
+    }
+
+    public String deleteComment(Long id) {
+        if (commentRepository.findById(id).isPresent()){
+            commentRepository.deleteById(id);
+            return "댓글이 삭제되었습니다.";
+        } else {
+            return "존재하지 않는 댓글입니다.";
+        }
     }
 }

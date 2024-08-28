@@ -3,7 +3,9 @@ package com.sparta.jpacrud.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.jpacrud.dto.CommentRequestDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -29,5 +31,11 @@ public class Comment extends Timestamped{
     public Comment(CommentRequestDto requestDto) {
         this.message = requestDto.getMessage();
         this.author = requestDto.getAuthor();
+    }
+
+    public Comment update(CommentRequestDto requestDto){
+        this.author = requestDto.getAuthor();
+        this.message = requestDto.getMessage();
+        return this;
     }
 }
