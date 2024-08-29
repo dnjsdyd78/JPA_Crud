@@ -1,5 +1,6 @@
 package com.sparta.jpacrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.jpacrud.dto.TodoRequestDto;
 import jakarta.persistence.*;
@@ -33,6 +34,11 @@ public class Todo extends Timestamped{
     @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
 
     public Todo(TodoRequestDto requestDto) {

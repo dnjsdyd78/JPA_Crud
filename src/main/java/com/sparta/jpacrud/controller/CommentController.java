@@ -19,7 +19,6 @@ public class CommentController {
     }
 
     //댓글작성
-
     @PostMapping("/comment/{id}")
     public Todo addComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
 

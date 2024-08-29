@@ -1,14 +1,10 @@
 package com.sparta.jpacrud.controller;
 
 
+import com.sparta.jpacrud.dto.PageDto;
 import com.sparta.jpacrud.dto.TodoRequestDto;
 import com.sparta.jpacrud.dto.TodoResponseDto;
-import com.sparta.jpacrud.dto.PageDto;
 import com.sparta.jpacrud.service.TodoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
