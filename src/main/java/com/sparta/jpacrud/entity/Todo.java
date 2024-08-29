@@ -35,7 +35,7 @@ public class Todo extends Timestamped{
     @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
