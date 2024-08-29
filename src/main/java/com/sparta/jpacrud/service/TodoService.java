@@ -1,16 +1,21 @@
 package com.sparta.jpacrud.service;
 
+import com.sparta.jpacrud.dto.PageDto;
 import com.sparta.jpacrud.dto.TodoRequestDto;
 import com.sparta.jpacrud.dto.TodoResponseDto;
-import com.sparta.jpacrud.dto.PageDto;
+import com.sparta.jpacrud.dto.UserRequestDto;
 import com.sparta.jpacrud.entity.Todo;
+import com.sparta.jpacrud.entity.User;
 import com.sparta.jpacrud.repository.TodoRepository;
+import com.sparta.jpacrud.repository.UserRepository;
 import jakarta.persistence.EntityManager;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -19,22 +24,21 @@ import java.util.stream.Collectors;
 public class TodoService {
 
     private final TodoRepository todoRepository;
-    private final EntityManager em;
+    private final UserRepository userRepository;
 
-    public TodoService(TodoRepository todoRepository, EntityManager em) {
+    public TodoService(TodoRepository todoRepository, EntityManager em, UserRepository userRepository) {
         this.todoRepository = todoRepository;
-        this.em = em;
-
+        this.userRepository = userRepository;
     }
 
     public TodoResponseDto createTodo(TodoRequestDto todoRequestDto) {
+        User user = new User(todoRequestDto);
         Todo todo = new Todo(todoRequestDto);
+        todo.setUser(user);
 
-
+        userRepository.save(user);
         Todo saveTodo = todoRepository.save(todo);
-
-        TodoResponseDto todoResponseDto = new TodoResponseDto(todo);
-        return todoResponseDto;
+        return new TodoResponseDto(saveTodo);
     }
 
 

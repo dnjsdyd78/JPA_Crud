@@ -4,6 +4,7 @@ package com.sparta.jpacrud.controller;
 import com.sparta.jpacrud.dto.PageDto;
 import com.sparta.jpacrud.dto.TodoRequestDto;
 import com.sparta.jpacrud.dto.TodoResponseDto;
+import com.sparta.jpacrud.dto.UserRequestDto;
 import com.sparta.jpacrud.service.TodoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class TodoController {
     }
     //일정생성
     @PostMapping("/todo")
-    public TodoResponseDto createTodo(@RequestBody TodoRequestDto requestDto) {
-        return todoService.createTodo(requestDto);
+    public TodoResponseDto createTodo(@RequestBody TodoRequestDto todoRequest) {
+        return todoService.createTodo(todoRequest);
     }
 
     //일정조회

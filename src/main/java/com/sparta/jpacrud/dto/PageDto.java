@@ -22,6 +22,6 @@ public class PageDto {
         this.totalComments = todo.getComments().size();
         this.createAt = todo.getCreateAt();
         this.updateAt = todo.getUpdateAt();
-        this.userName = todo.getUsername();
+        this.userName = todo.getUser().getName();
     }
 }

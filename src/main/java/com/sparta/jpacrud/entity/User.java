@@ -1,6 +1,8 @@
 package com.sparta.jpacrud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sparta.jpacrud.dto.TodoRequestDto;
+import com.sparta.jpacrud.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +30,10 @@ public class User extends Timestamped {
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private List<Todo> todos;
+
+    public User(TodoRequestDto requestDto) {
+        this.name = requestDto.getUserName();
+        this.email = requestDto.getEmail();
+    }
 }
 
